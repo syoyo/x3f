@@ -47,7 +47,7 @@ ifeq ($(HOST), $(TARGET))
   CC = gcc
   CXX = g++
 ifeq ($(HOST_SYS), osx)
-  LIPO = lipo
+  #LIPO = lipo
 endif
 else				# Cross compilation
 ifeq ($(HOST_SYS), linux)
@@ -76,8 +76,8 @@ ifeq ($(TARGET), osx-i386)
   STRIP = i386-apple-darwin11-strip
 else
 ifeq ($(TARGET), osx-universal)
-  LIPO = x86_64-apple-darwin11-lipo
-  STRIP = x86_64-apple-darwin11-strip
+  #LIPO = x86_64-apple-darwin11-lipo
+  #STRIP = x86_64-apple-darwin11-strip
 endif
 endif
 endif
@@ -88,7 +88,8 @@ ifeq ($(HOST_SYS), osx)
 ifeq ($(TARGET_SYS), osx)
   CC = gcc
   CXX = g++
-  SDKFLAGS = -isysroot /Developer/SDKs/MacOSX10.7.sdk -mmacosx-version-min=10.7 -arch $(TARGET_CPU)
+  #SDKFLAGS = -isysroot /Developer/SDKs/MacOSX10.7.sdk -mmacosx-version-min=10.7 -arch $(TARGET_CPU)
+  SDKFLAGS = -I /usr/local/Cellar/opencv3/3.1.0_3/include/
 endif
 endif
 endif
@@ -101,7 +102,7 @@ endif
 ifeq ($(TARGET), osx-universal)
 
 ifndef LIPO
-  $(error Building universal binaries for target $(TARGET) on host $(HOST) is unsupported)
+  #$(error Building universal binaries for target $(TARGET) on host $(HOST) is unsupported)
 endif
 
 else

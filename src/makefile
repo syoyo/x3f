@@ -58,19 +58,21 @@ ZLIB =
 ifneq ($(TARGET_SYS), linux)
 ZLIB = $(OCV)/share/OpenCV/3rdparty/lib/libzlib.a
 endif
-OCV_AUX = $(OCV)/share/OpenCV/3rdparty/lib/libtbb.a $(ZLIB)
+#OCV_AUX = $(OCV)/share/OpenCV/3rdparty/lib/libtbb.a $(ZLIB)
+OCV_AUX = $(ZLIB)
 
 OCV_CFLAGS = -I$(OCV)/include
-OCV_LIBS = $(addprefix $(OCV)/lib/libopencv_,photo.a imgproc.a core.a) $(OCV_AUX)
+#OCV_LIBS = $(addprefix $(OCV)/lib/libopencv_,photo.a imgproc.a core.a) $(OCV_AUX)
+#OCV_LIBS = -L/usr/local/Cellar/opencv3/3.1.0_3/lib/ -lopencv_photo -lopencv_imgproc -lopencv_core $(OCV_AUX)
 
 TIFF_INC1 = ../deps/src/opencv/3rdparty/libtiff
 TIFF_INC2 = ../deps/src/$(TARGET)/opencv_build/3rdparty/libtiff
 TIFF_CFLAGS = -I$(TIFF_INC1) -I$(TIFF_INC2)
-TIFF_LIBS = $(OCV)/share/OpenCV/3rdparty/lib/liblibtiff.a $(ZLIB)
+#TIFF_LIBS = $(OCV)/share/OpenCV/3rdparty/lib/liblibtiff.a $(ZLIB)
 
 CFLAGS = $(CFBASE) $(TIFF_CFLAGS) -g -O3 -Wall $(C)
 CXXFLAGS = $(CFLAGS) $(OCV_CFLAGS) -fvisibility-inlines-hidden
-LDFLAGS = $(LDBASE) $(L)
+LDFLAGS = -L/usr/local/Cellar/opencv3/3.1.0_3/lib/ -lopencv_core -lopencv_imgproc -lopencv_photo -L/usr/local/lib -ltiff $(LDBASE) $(L)
 
 BINDIR = ../bin/$(TARGET)
 PROGS = x3f_extract$(EXE) x3f_io_test$(EXE) x3f_matrix_test$(EXE)
@@ -85,8 +87,11 @@ all: $(addprefix $(BINDIR)/,$(PROGS))
 
 ifeq ($(TARGET), osx-universal)
 
-$(BINDIR)/%: ../bin/osx-x86_64/% ../bin/osx-i386/% | $(BINDIR)
-	$(LIPO) -create -output $@ $^
+#$(BINDIR)/%: ../bin/osx-x86_64/% ../bin/osx-i386/% | $(BINDIR)
+#	$(LIPO) -create -output $@ $^
+
+$(BINDIR)/%: ../bin/osx-i386/% | $(BINDIR)
+	cp $^ $@
 
 .PHONY: force
 
