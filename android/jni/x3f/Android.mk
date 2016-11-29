@@ -55,6 +55,7 @@ LOCAL_SRC_FILES := \
    	../../../src/x3f_process.c \
    	../../../src/x3f_spatial_gain.c \
    	../../../src/x3f_version.c \
+   	utf-util.cc
 
 LOCAL_LDLIBS := -llog -lz
 

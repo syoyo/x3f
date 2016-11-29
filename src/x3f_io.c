@@ -17,6 +17,8 @@
 
 #if defined(_WIN32) || defined (_WIN64)
 #include <windows.h>
+#elif defined(ANDROID)
+#include "utf-util.h"     // android/jni/x3f
 #else
 #include <iconv.h>
 #endif
@@ -1138,6 +1140,11 @@ static char *utf16le_to_utf8(utf16_t *str)
   WideCharToMultiByte(CP_UTF8, 0, str, -1, buf, osize, NULL, NULL);
 
   return buf;
+}
+#elif defined(ANDROID)
+static char *utf16le_to_utf8(utf16_t *str)
+{
+  return utf_util_utf16_to_utf8(str);
 }
 #else
 static char *utf16le_to_utf8(utf16_t *str)

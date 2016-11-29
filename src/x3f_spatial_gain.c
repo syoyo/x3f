@@ -156,8 +156,7 @@ int x3f_get_merrill_type_spatial_gain(x3f_t *x3f, int hp_flag,
       if (sscanf(include_blocks[i], "SpatialGainHPProps_%d%c",
 		 &aperture_index, &dummy) == 1 &&
 	  x3f_get_camf_property_list(x3f, include_blocks[i],
-				     &names, &values, &num) &&
-	  aperture_index >= 0 && aperture_index < num_fstop) {
+				     &names, &values, &num) && aperture_index < num_fstop) {
 	g = alloca(sizeof(merrill_spatial_gain_t));
 	g->name = include_blocks[i];
 	g->x = 1.0/spatial_gain_fstop[aperture_index];
@@ -182,8 +181,7 @@ int x3f_get_merrill_type_spatial_gain(x3f_t *x3f, int hp_flag,
 	if (sscanf(include_blocks[i], "SpatialGainsProps_%d_%3s%c",
 		   &aperture_index, focus_distance, &dummy) == 2 &&
 	    x3f_get_camf_property_list(x3f, include_blocks[i],
-				       &names, &values, &num) &&
-	    aperture_index >= 0 && aperture_index < num_fstop) {
+				       &names, &values, &num) && aperture_index < num_fstop) {
 	  double lenspos;
 
 	  if (!strcmp(focus_distance, "INF"))

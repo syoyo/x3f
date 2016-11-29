@@ -357,12 +357,17 @@ static void interpolate_bad_pixels(x3f_t *x3f, x3f_area16_t *image, int colors)
       (colors == 3 && x3f_get_camf_matrix_var(x3f, "BadPixelsChromaF23",
 					      &bpf23_len, NULL, NULL,
 					      M_UINT, (void **)&bpf23)))
-    for (i=0, row=-1; i < bpf23_len; i++)
-      if (row == -1) row = bpf23[i];
-      else if (bpf23[i] == 0) row = -1;
-      else {MARK_PIX(bad_pixel_list, bad_pixel_vec,
+    for (i=0, row=-1; i < bpf23_len; i++) {
+      if (row == -1) {
+         row = bpf23[i];
+      } else if (bpf23[i] == 0) {
+         row = -1;
+      } else {
+         MARK_PIX(bad_pixel_list, bad_pixel_vec,
 		     bpf23[i], row,
-		     image->columns, image->rows); i++;}
+		     image->columns, image->rows); i++; 
+      }
+    }
 
   /* Interpolate over autofocus pixels for sd Quattro.
      TODO: The positions shouldn't really be hardcoded. */
